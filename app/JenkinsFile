@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+    environment {
+        GRADLE_HOME = tool 'Gradle'
+        ANDROID_HOME = 'path/to/your/android/sdk'
+        PATH = "${GRADLE_HOME}/bin:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${PATH}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    echo 'Checking out code...'
+                    checkout scm
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    echo 'Building your Android project...'
+                    sh "./gradlew clean assembleDebug"
+                }
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                script {
+                    echo 'Running unit tests...'
+                    sh "./gradlew test"
+                }
+            }
+        }
+
+        stage('Instrumented Tests') {
+            steps {
+                script {
+                    echo 'Running instrumented tests...'
+                    sh "./gradlew connectedAndroidTest"
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    echo 'Deploying your Android project...'
+                    // Add deployment commands or scripts here
+                    // For example, you might deploy to Firebase Test Lab, Google Play, or another platform.
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if the build is successful'
+            // You can add additional steps or notifications here
+        }
+        failure {
+            echo 'This will run only if the build fails'
+            // You can add additional steps or notifications here
+        }
+    }
+}
