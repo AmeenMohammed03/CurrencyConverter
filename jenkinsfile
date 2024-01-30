@@ -15,17 +15,18 @@ pipeline {
                     // Add build commands or scripts here
 
                     // Assuming you have a Gradle wrapper in your project
-                    sh 'sudo./gradlew build'
+                    sh './gradlew build'
                 }
             }
         }
-        
-        stage('Debug'){
+     stages {
+        stage('Debug') {
             steps {
-                script {
-                    sh 'Printing PATH...'
-                    sh 'echo $PATH'
-                }
+                echo 'Current Directory:'
+                sh 'pwd'
+ 
+                echo 'Contents of Directory:'
+                sh 'ls -la'
             }
         }
 
