@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'https://github.com/AmeenMohammed03/CurrencyConverter.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    echo 'Building your project...'
+                    // Add build commands or scripts here
+
+                    // Assuming you have a Gradle wrapper in your project
+                    sh './gradlew build'
+                }
+            }
+        }
+        
+        stage('Debug'){
+            steps {
+                script {
+                    sh 'ls-1'
+                    sh 'whoami'
+                }
+            }
+        }
+
+        stage('Run Test') {
+            steps {
+                script {
+                    // Assuming you have a Gradle wrapper in your project
+                    sh './gradlew test'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build successful!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
