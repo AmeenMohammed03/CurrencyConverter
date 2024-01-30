@@ -15,7 +15,7 @@ pipeline {
                     // Add build commands or scripts here
 
                     // Assuming you have a Gradle wrapper in your project
-                    sh './gradlew build'
+                    sh 'sudo./gradlew build'
                 }
             }
         }
@@ -23,8 +23,8 @@ pipeline {
         stage('Debug'){
             steps {
                 script {
-                    sh 'ls-1'
-                    sh 'whoami'
+                    sh 'Printing PATH...'
+                    sh 'echo $PATH'
                 }
             }
         }
