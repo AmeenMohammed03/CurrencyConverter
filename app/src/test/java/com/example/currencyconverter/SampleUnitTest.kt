@@ -7,6 +7,6 @@ class SampleUnitTest {
 
     @Test
     fun division() {
-        assertEquals(1224, 25 / 2 * 2 + 200 * 6)
+        assertEquals(1224, 25 / 2 * 2 + 200 * 6 - 10)
     }
 }
